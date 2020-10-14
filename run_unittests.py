@@ -6920,6 +6920,26 @@ class LinuxlikeTests(BasePlatformTests):
             self.build()
 
     @skipIfNoPkgconfig
+    def test_pkgconfig_in_prefix(self):
+        '''
+        '''
+        with tempfile.TemporaryDirectory() as temp_prefixdirname:
+            # build library
+            testdirbase = os.path.join(self.unit_test_dir, '85 pkg-config in prefix')
+            proj1dir = os.path.join(testdirbase, 'proj1')
+            self.init(proj1dir, extra_args=['--prefix=' + temp_prefixdirname,
+                                            ], default_args=False)
+            self.build()
+            self.install(use_destdir=False)
+
+            # build user of library
+            proj2dir = os.path.join(testdirbase, 'proj2')
+            self.new_builddir()
+            self.init(proj2dir, extra_args=['--prefix=' + temp_prefixdirname,
+                                            ], default_args=False)
+            self.build()
+
+    @skipIfNoPkgconfig
     def test_static_archive_stripping(self):
         '''
         Check that Meson produces valid static archives with --strip enabled
