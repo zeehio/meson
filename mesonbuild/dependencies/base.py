@@ -655,19 +655,17 @@ class PkgConfigDependency(ExternalDependency):
         sysroot = environment.properties[for_machine].get_sys_root()
         if sysroot:
             env['PKG_CONFIG_SYSROOT_DIR'] = sysroot
+        # Add the pkgconfig directory from the installation prefix to PKG_CONFIG_PATH:
+        if for_machine == MachineChoice.HOST:
+            pkg_config_libdir_prefix = os.path.join(
+                environment.get_prefix(), environment.get_libdir(), "pkgconfig")
+            if os.path.isdir(pkg_config_libdir_prefix):
+                extra_paths.append(pkg_config_libdir_prefix)
         new_pkg_config_path = ':'.join([p for p in extra_paths])
         mlog.debug('PKG_CONFIG_PATH: ' + new_pkg_config_path)
         env['PKG_CONFIG_PATH'] = new_pkg_config_path
 
         pkg_config_libdir_prop = environment.properties[for_machine].get_pkg_config_libdir()
-        # Add the pkgconfig directory from the installation prefix to PKG_CONFIG_LIBDIR:
-        if for_machine == MachineChoice.HOST:
-            if pkg_config_libdir_prop is None:
-                pkg_config_libdir_prop = []
-            pkg_config_libdir_prefix = os.path.join(
-                environment.get_prefix(), environment.get_libdir(), "pkgconfig")
-            if os.path.isdir(pkg_config_libdir_prefix):
-                pkg_config_libdir_prop.append(pkg_config_libdir_prefix)
         if pkg_config_libdir_prop:
             new_pkg_config_libdir = ':'.join([p for p in pkg_config_libdir_prop])
             env['PKG_CONFIG_LIBDIR'] = new_pkg_config_libdir
