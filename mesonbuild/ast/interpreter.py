@@ -98,6 +98,7 @@ class AstInterpreter(interpreterbase.InterpreterBase):
                            'dependency': self.func_do_nothing,
                            'get_option': self.func_do_nothing,
                            'join_paths': self.func_do_nothing,
+                           'rel_path': self.func_do_nothing,
                            'environment': self.func_do_nothing,
                            'import': self.func_do_nothing,
                            'vcs_tag': self.func_do_nothing,

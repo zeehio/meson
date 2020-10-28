@@ -496,6 +496,9 @@ class InterpreterBase:
     def join_path_strings(self, args: T.Sequence[str]) -> str:
         return os.path.join(*args).replace('\\', '/')
 
+    def rel_path_strings(self, args: T.Sequence[str]) -> str:
+        return os.path.relpath(args[0], args[1]).replace('\\', '/')
+
     def parse_project(self) -> None:
         """
         Parses project() and initializes languages, compilers etc. Do this

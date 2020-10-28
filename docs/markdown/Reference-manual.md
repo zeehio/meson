@@ -1228,6 +1228,18 @@ res1 = join_paths(foo, bar)
 res2 = foo / bar
 ```
 
+### rel_path()
+
+``` meson
+string rel_path(string1, string2)
+```
+
+*(since 0.56.0)*
+
+Builds the path to `string1` relative to `string2`. For example
+`rel_path('/a/lib', '/a/bin')` results in `../lib`.
+
+
 ### library()
 
 ``` meson

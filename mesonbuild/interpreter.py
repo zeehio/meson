@@ -2498,6 +2498,7 @@ class Interpreter(InterpreterBase):
                            'warning': self.func_warning,
                            'option': self.func_option,
                            'project': self.func_project,
+                           'rel_path': self.func_rel_path,
                            'run_target': self.func_run_target,
                            'run_command': self.func_run_command,
                            'set_variable': self.func_set_variable,
@@ -4698,6 +4699,13 @@ different subdirectory.
     @noKwargs
     def func_join_paths(self, node, args, kwargs):
         return self.join_path_strings(args)
+
+    @stringArgs
+    @noKwargs
+    def func_rel_path(self, node, args, kwargs):
+        if len(args) != 2:
+            raise InvalidCode('rel_path takes two arguments.')
+        return self.rel_path_strings(args)
 
     def run(self) -> None:
         super().run()
