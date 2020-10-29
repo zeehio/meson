@@ -194,3 +194,20 @@ Returns the last component of the path, dropping the last part of the suffix
 fs.stem('foo/bar/baz.dll')  # baz
 fs.stem('foo/bar/baz.dll.a')  # baz.dll
 ```
+
+### relative_to
+
+*since 0.56.0*
+
+Given two absolute paths, returns a version of the first path relative to the second.
+If a path is given as the 'within' argument is specified, the function will return the
+first path unchanged if it is not inside 'within'.
+
+```meson
+fs.relative_to('/prefix/lib', '/prefix/bin')  # '../lib'
+fs.relative_to('/prefix/lib/foo', '/prefix')  # 'lib/foo'
+fs.relative_to('/usr/lib/foo', '/usr/bin', within: '/usr')  # '../lib/foo'
+fs.relative_to('/usr/lib/foo', '/usr/bin', within: '/var')  # '/usr/lib/foo'
+```
+
+
